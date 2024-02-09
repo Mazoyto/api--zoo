@@ -1,22 +1,23 @@
 import { Animal } from "./Animal";
 
 export class Habitat {
+    // Atributos privados que armazenam informações sobre o habitat
+    private nome: string;  // Nome do habitat
+    private listaAnimais: Array<Animal>;  // Lista de animais no habitat
 
-    private nome: string;
-    private listaAnimais: Array<Animal>;
-
+    // Construtor da classe Habitat que inicializa os atributos do habitat
     constructor(_nome: string, _listaAnimais: Array<Animal>) {
-        this.nome = _nome;
-        this.listaAnimais = _listaAnimais;
+        this.nome = _nome;  // Inicializa o nome do habitat
+        this.listaAnimais = _listaAnimais;  // Inicializa a lista de animais no habitat
     }
 
     /**
      * Define o nome do habitat.
      * 
-     * @param nome - O nome a ser definido para o habitat.
+     * @param nome - O nome a ser atribuído ao habitat.
      */
     public setNome(nome: string): void {
-        this.nome = nome;
+        this.nome = nome;  // Define o nome do habitat
     }
 
     /**
@@ -25,16 +26,16 @@ export class Habitat {
      * @returns O nome do habitat.
      */
     public getNome(): string {
-        return this.nome;
+        return this.nome;  // Retorna o nome do habitat
     }
 
     /**
      * Define a lista de animais no habitat.
      * 
-     * @param listaAnimais - A lista de animais a ser definida para o habitat.
+     * @param listaAnimais - A lista de animais a ser atribuída ao habitat.
      */
     public setListaAnimais(listaAnimais: Array<Animal>): void {
-        this.listaAnimais = listaAnimais;
+        this.listaAnimais = listaAnimais;  // Define a lista de animais no habitat
     }
 
     /**
@@ -43,6 +44,6 @@ export class Habitat {
      * @returns A lista de animais no habitat.
      */
     public getListaAnimais(): Array<Animal> {
-        return this.listaAnimais;
+        return this.listaAnimais;  // Retorna a lista de animais no habitat
     }
 }
