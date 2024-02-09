@@ -4,9 +4,9 @@ export class Reptil extends Animal {
     private tipo_de_escama: string;
 
     constructor(_nome: string,
-                _idade: number,
-                _genero: string,
-                _tipo_de_escama: string,) {
+        _idade: number,
+        _genero: string,
+        _tipo_de_escama: string,) {
         super(_nome, _idade, _genero);
         this.tipo_de_escama = _tipo_de_escama;
     }

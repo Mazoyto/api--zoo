@@ -7,9 +7,9 @@ export class Animal {
     constructor(_nome: string,
         _idade: number,
         _genero: string) {
-      this.nome = _nome;
-      this.idade = _idade;
-      this.genero = _genero
+        this.nome = _nome;
+        this.idade = _idade;
+        this.genero = _genero
     }
 
     public setNome(nome: string): void {
