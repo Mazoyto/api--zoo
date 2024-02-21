@@ -1,30 +1,19 @@
-import express from 'express';
-import cors from 'cors';
-import { Ave } from './model/Ave';
-import { Reptil } from './model/Reptil';
-import { Mamifero } from './model/Mamifero';
-import { Habitat } from './model/Habitat';
-import { Atracao } from './model/Atracao';
-import { Zoologico } from './model/Zoologico';
-
-const port: number = 4329;
+import express from "express";
+import cors from "cors";
+import { Habitat } from "./model/Habitat";
+import { Atracao } from "./model/Atracao";
+import { Zoologico } from "./model/Zoologico";
+import { DatabaseModel } from "./model/DatabaseModel";
+import { Reptil } from "./model/Reptil";
 
 const server = express();
+const port: number = 4329;
 
 server.use(express.json());
 server.use(cors());
 
 server.get('/', (req, res) => {
-    let ave: Ave = new Ave('Tucano', 90,'Macho',1000);
-    let reptil: Reptil = new Reptil('Calango', 250,'Macho','Cicloides');
-    let mamifero: Mamifero = new Mamifero('Doberman', 'Cachorro',102,'Cicloides');
-    res.json('ave');
-});
-
-server.post('/ave' , (req, res) => {
-    const { nome, idade, genero, envergadura } = req.body;
-    let ave: Ave = new Ave(nome, idade, genero, envergadura);
-    res.json(["A nova ave do zoológico é:", ave]);
+    res.json("ola");
 });
 
 server.post('/habitat', (req, res) => {
@@ -38,16 +27,43 @@ server.post('/atracao', (req, res) => {
     const { nome, habitat } = req.body;
     const atracao = new Atracao(nome, habitat);
     console.log(atracao);
-    res.status(200).json('Atracao criado');
+    res.status(200).json('Atração criada');
 });
 
 server.post('/zoologico', (req, res) => {
     const { nome, atracao } = req.body;
-    const zoologico = new Zoologico(nome, atracao);
-    console.log(zoologico);
-    res.status(200).json('zoologico criado');
+    const zoo = new Zoologico(nome, atracao);
+    console.log(zoo);
+    res.status(200).json('Zoológico criado');
 });
 
-server.listen(port, () => {
-    console.log(`Servidor está escutando no endereço http://localhost:${port}`);
-});
+server.get('/list/reptil', async (req, res) => {
+    const repteis = await Reptil.listarRepteis();
+
+    res.status(200).json(repteis);
+})
+
+server.post('/new/reptil', async (req, res) => {
+    const { nome, idade, genero, tipo_de_escamas } = req.body;
+
+    const novoReptil = new Reptil(nome, idade, genero, tipo_de_escamas);
+
+    const result = await Reptil.cadastrarReptil(novoReptil);
+
+    if(result) {
+        return res.status(200).json('Reptil cadastrado com sucesso');
+    } else {
+        return res.status(400).json('Não foi possível cadastrar o réptil no banco de dados');
+    }
+    
+})
+
+new DatabaseModel().testeConexao().then((resbd) => {
+    if(resbd) {
+        server.listen(port, () => {
+            console.log(`Servidor rodando em http://localhost:${port}`);
+        })
+    } else {
+        console.log('Não foi possível conectar ao banco de dados');
+    }
+})
